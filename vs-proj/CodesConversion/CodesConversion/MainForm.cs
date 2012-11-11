@@ -25,6 +25,8 @@ namespace CodesConversion
         private String theOutputFilePath = String.Empty;
         private String theVideoFilePath = String.Empty;
 
+        private CodaFile theCodaFile = null;
+
         #endregion
 
         #region Constructor
@@ -42,7 +44,7 @@ namespace CodesConversion
 
         private void theConvertButton_Click(object sender, EventArgs e)
         {
-
+            InitCodaFile();
         }
 
         private void theInputFileBrowseButton_Click(object sender, EventArgs e)
@@ -53,12 +55,19 @@ namespace CodesConversion
             if (inputFileDiag.ShowDialog() == DialogResult.OK)
             {
                 theInputFilePath = inputFileDiag.FileName;
+                theInputFileTextBox.Text = theInputFilePath;
             }
         }
 
         private void theVideoFileBrowseButton_Click(object sender, EventArgs e)
         {
+            OpenFileDialog inputFileDiag = new OpenFileDialog();
+            inputFileDiag.Filter = VIDEO_FILE_FILTER;
 
+            if (inputFileDiag.ShowDialog() == DialogResult.OK)
+            {
+                theInputFilePath = inputFileDiag.FileName;
+            }
         }
 
         private void theOutputFileBrowseButton_Click(object sender, EventArgs e)
@@ -79,6 +88,25 @@ namespace CodesConversion
         }
 
         #endregion
+
+        private bool InitCodaFile()
+        {
+            bool retVal = false;
+
+            theCodaFile = new CodaFile(theInputFilePath);
+            if (theCodaFile.ParseFile())
+            {
+                theCodesTreeView.Nodes.Clear();
+
+                // Add Rows/Codes and Instances Nodes to TreeView
+                theCodesTreeView.Nodes.Add(theCodaFile.BuildTree());
+                theCodesTreeView.Nodes[0].Expand();
+
+                retVal = true;
+            }
+
+            return retVal;
+        }
 
         #endregion
 
