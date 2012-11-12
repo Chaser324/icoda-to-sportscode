@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
+using System.IO;
 
 namespace CodesConversion
 {
@@ -21,11 +16,12 @@ namespace CodesConversion
 
         #region Private Fields
 
-        private String theInputFilePath = String.Empty;
-        private String theOutputFilePath = String.Empty;
+        private String theCodaFilePath = String.Empty;
+        private String theTLcodesFilePath = String.Empty;
         private String theVideoFilePath = String.Empty;
 
         private CodaFile theCodaFile = null;
+        private SportsCodeFile theSportsCodeFile = null;
 
         #endregion
 
@@ -44,18 +40,53 @@ namespace CodesConversion
 
         private void theConvertButton_Click(object sender, EventArgs e)
         {
-            InitCodaFile();
+            if (File.Exists(theCodaFilePath) && File.Exists(theVideoFilePath) && theTLcodesFilePath != String.Empty)
+            {
+                InitCodaFile();
+
+                theSportsCodeFile = new SportsCodeFile(theTLcodesFilePath);
+                theSportsCodeFile.ConvertCodeFile(theCodaFile);
+            }
+            else
+            {
+                // Error. Not all files specified.
+            }
+        }
+
+        private void theCodaToTLcodesButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void theParseCodaFileButton_Click(object sender, EventArgs e)
+        {
+            if (File.Exists(theCodaFilePath))
+            {
+                InitCodaFile();
+            }
+        }
+
+        private void theParseTlCodesButton_Click(object sender, EventArgs e)
+        {
+            if (File.Exists(theTLcodesFilePath))
+            {
+                InitTLcodesFile();
+            }
         }
 
         private void theInputFileBrowseButton_Click(object sender, EventArgs e)
         {
-            OpenFileDialog inputFileDiag = new OpenFileDialog();
+            SaveFileDialog inputFileDiag = new SaveFileDialog();
+            inputFileDiag.CheckFileExists = false;
+            inputFileDiag.DefaultExt = "xml";
+            inputFileDiag.CheckPathExists = false;
+            inputFileDiag.OverwritePrompt = false;
             inputFileDiag.Filter = INPUT_FILE_FILTER;
 
             if (inputFileDiag.ShowDialog() == DialogResult.OK)
             {
-                theInputFilePath = inputFileDiag.FileName;
-                theInputFileTextBox.Text = theInputFilePath;
+                theCodaFilePath = inputFileDiag.FileName;
+                theInputFileTextBox.Text = theCodaFilePath;
             }
         }
 
@@ -66,7 +97,8 @@ namespace CodesConversion
 
             if (inputFileDiag.ShowDialog() == DialogResult.OK)
             {
-                theInputFilePath = inputFileDiag.FileName;
+                theVideoFilePath = inputFileDiag.FileName;
+                theVideoFileTextBox.Text = theVideoFilePath;
             }
         }
 
@@ -75,15 +107,19 @@ namespace CodesConversion
             SaveFileDialog saveFileDiag = new SaveFileDialog();
             saveFileDiag.Filter = OUTPUT_FILE_FILTER;
             saveFileDiag.DefaultExt = "TLcodes";
+            saveFileDiag.CheckFileExists = false;
+            saveFileDiag.CheckPathExists = false;
+            saveFileDiag.OverwritePrompt = false;
 
-            if (theInputFilePath != String.Empty && theOutputFilePath == String.Empty)
+            if (theCodaFilePath != String.Empty && theTLcodesFilePath == String.Empty)
             {
-                saveFileDiag.FileName = theInputFilePath.Replace(".xml",".TLCodes");
+                saveFileDiag.FileName = theCodaFilePath.Replace(".xml",".TLCodes");
             }
 
             if (saveFileDiag.ShowDialog() == DialogResult.OK)
             {
-                theInputFilePath = saveFileDiag.FileName;
+                theTLcodesFilePath = saveFileDiag.FileName;
+                theOutputFileTextBox.Text = theTLcodesFilePath;
             }
         }
 
@@ -93,13 +129,32 @@ namespace CodesConversion
         {
             bool retVal = false;
 
-            theCodaFile = new CodaFile(theInputFilePath);
+            theCodaFile = new CodaFile(theCodaFilePath);
             if (theCodaFile.ParseFile())
             {
                 theCodesTreeView.Nodes.Clear();
 
                 // Add Rows/Codes and Instances Nodes to TreeView
                 theCodesTreeView.Nodes.Add(theCodaFile.BuildTree());
+                theCodesTreeView.Nodes[0].Expand();
+
+                retVal = true;
+            }
+
+            return retVal;
+        }
+
+        private bool InitTLcodesFile()
+        {
+            bool retVal = false;
+
+            theSportsCodeFile = new SportsCodeFile(theTLcodesFilePath);
+            if (theSportsCodeFile.ParseFile())
+            {
+                theCodesTreeView.Nodes.Clear();
+
+                // Add Rows/Codes and Instances Nodes to TreeView
+                theCodesTreeView.Nodes.Add(theSportsCodeFile.BuildTree());
                 theCodesTreeView.Nodes[0].Expand();
 
                 retVal = true;

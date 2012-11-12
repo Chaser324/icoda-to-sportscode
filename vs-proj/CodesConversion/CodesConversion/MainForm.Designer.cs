@@ -95,6 +95,8 @@
             this.numericUpDown23 = new System.Windows.Forms.NumericUpDown();
             this.label31 = new System.Windows.Forms.Label();
             this.numericUpDown24 = new System.Windows.Forms.NumericUpDown();
+            this.theCodaToTLcodesButton = new System.Windows.Forms.Button();
+            this.theParseTlCodesButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
@@ -135,12 +137,12 @@
             this.theInputFileTextBox.Location = new System.Drawing.Point(92, 10);
             this.theInputFileTextBox.Name = "theInputFileTextBox";
             this.theInputFileTextBox.ReadOnly = true;
-            this.theInputFileTextBox.Size = new System.Drawing.Size(374, 20);
+            this.theInputFileTextBox.Size = new System.Drawing.Size(503, 20);
             this.theInputFileTextBox.TabIndex = 1;
             // 
             // theInputFileBrowseButton
             // 
-            this.theInputFileBrowseButton.Location = new System.Drawing.Point(472, 8);
+            this.theInputFileBrowseButton.Location = new System.Drawing.Point(601, 8);
             this.theInputFileBrowseButton.Name = "theInputFileBrowseButton";
             this.theInputFileBrowseButton.Size = new System.Drawing.Size(91, 23);
             this.theInputFileBrowseButton.TabIndex = 2;
@@ -153,21 +155,21 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(12, 65);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(58, 13);
+            this.label2.Size = new System.Drawing.Size(68, 13);
             this.label2.TabIndex = 3;
-            this.label2.Text = "Output File";
+            this.label2.Text = "TLcodes File";
             // 
             // theOutputFileTextBox
             // 
             this.theOutputFileTextBox.Location = new System.Drawing.Point(92, 62);
             this.theOutputFileTextBox.Name = "theOutputFileTextBox";
             this.theOutputFileTextBox.ReadOnly = true;
-            this.theOutputFileTextBox.Size = new System.Drawing.Size(374, 20);
+            this.theOutputFileTextBox.Size = new System.Drawing.Size(503, 20);
             this.theOutputFileTextBox.TabIndex = 4;
             // 
             // theOutputFileBrowseButton
             // 
-            this.theOutputFileBrowseButton.Location = new System.Drawing.Point(472, 60);
+            this.theOutputFileBrowseButton.Location = new System.Drawing.Point(601, 60);
             this.theOutputFileBrowseButton.Name = "theOutputFileBrowseButton";
             this.theOutputFileBrowseButton.Size = new System.Drawing.Size(91, 23);
             this.theOutputFileBrowseButton.TabIndex = 5;
@@ -177,17 +179,17 @@
             // 
             // theConvertButton
             // 
-            this.theConvertButton.Location = new System.Drawing.Point(569, 10);
+            this.theConvertButton.Location = new System.Drawing.Point(12, 316);
             this.theConvertButton.Name = "theConvertButton";
-            this.theConvertButton.Size = new System.Drawing.Size(123, 73);
+            this.theConvertButton.Size = new System.Drawing.Size(422, 47);
             this.theConvertButton.TabIndex = 6;
-            this.theConvertButton.Text = "Convert!";
+            this.theConvertButton.Text = "iCoda -> TLcodes!";
             this.theConvertButton.UseVisualStyleBackColor = true;
             this.theConvertButton.Click += new System.EventHandler(this.theConvertButton_Click);
             // 
             // theVideoFileBrowseButton
             // 
-            this.theVideoFileBrowseButton.Location = new System.Drawing.Point(472, 34);
+            this.theVideoFileBrowseButton.Location = new System.Drawing.Point(601, 34);
             this.theVideoFileBrowseButton.Name = "theVideoFileBrowseButton";
             this.theVideoFileBrowseButton.Size = new System.Drawing.Size(91, 23);
             this.theVideoFileBrowseButton.TabIndex = 9;
@@ -200,7 +202,7 @@
             this.theVideoFileTextBox.Location = new System.Drawing.Point(92, 36);
             this.theVideoFileTextBox.Name = "theVideoFileTextBox";
             this.theVideoFileTextBox.ReadOnly = true;
-            this.theVideoFileTextBox.Size = new System.Drawing.Size(374, 20);
+            this.theVideoFileTextBox.Size = new System.Drawing.Size(503, 20);
             this.theVideoFileTextBox.TabIndex = 8;
             // 
             // label3
@@ -214,14 +216,14 @@
             // 
             // theProgressBar
             // 
-            this.theProgressBar.Location = new System.Drawing.Point(12, 296);
+            this.theProgressBar.Location = new System.Drawing.Point(12, 437);
             this.theProgressBar.Name = "theProgressBar";
             this.theProgressBar.Size = new System.Drawing.Size(677, 23);
             this.theProgressBar.TabIndex = 10;
             // 
             // theProgressTextBox
             // 
-            this.theProgressTextBox.Location = new System.Drawing.Point(12, 325);
+            this.theProgressTextBox.Location = new System.Drawing.Point(12, 466);
             this.theProgressTextBox.Multiline = true;
             this.theProgressTextBox.Name = "theProgressTextBox";
             this.theProgressTextBox.ReadOnly = true;
@@ -231,7 +233,7 @@
             // theConversionStatusLabel
             // 
             this.theConversionStatusLabel.AutoSize = true;
-            this.theConversionStatusLabel.Location = new System.Drawing.Point(12, 277);
+            this.theConversionStatusLabel.Location = new System.Drawing.Point(12, 418);
             this.theConversionStatusLabel.Name = "theConversionStatusLabel";
             this.theConversionStatusLabel.Size = new System.Drawing.Size(96, 13);
             this.theConversionStatusLabel.TabIndex = 12;
@@ -239,19 +241,20 @@
             // 
             // theCodesTreeView
             // 
-            this.theCodesTreeView.Location = new System.Drawing.Point(371, 326);
+            this.theCodesTreeView.Location = new System.Drawing.Point(371, 467);
             this.theCodesTreeView.Name = "theCodesTreeView";
             this.theCodesTreeView.Size = new System.Drawing.Size(318, 137);
             this.theCodesTreeView.TabIndex = 13;
             // 
             // theParseCodaFileButton
             // 
-            this.theParseCodaFileButton.Location = new System.Drawing.Point(569, 90);
+            this.theParseCodaFileButton.Location = new System.Drawing.Point(569, 316);
             this.theParseCodaFileButton.Name = "theParseCodaFileButton";
             this.theParseCodaFileButton.Size = new System.Drawing.Size(123, 23);
             this.theParseCodaFileButton.TabIndex = 14;
             this.theParseCodaFileButton.Text = "Parse Coda File";
             this.theParseCodaFileButton.UseVisualStyleBackColor = true;
+            this.theParseCodaFileButton.Click += new System.EventHandler(this.theParseCodaFileButton_Click);
             // 
             // numericUpDown1
             // 
@@ -865,11 +868,33 @@
             this.numericUpDown24.Size = new System.Drawing.Size(50, 20);
             this.numericUpDown24.TabIndex = 55;
             // 
+            // theCodaToTLcodesButton
+            // 
+            this.theCodaToTLcodesButton.Location = new System.Drawing.Point(440, 316);
+            this.theCodaToTLcodesButton.Name = "theCodaToTLcodesButton";
+            this.theCodaToTLcodesButton.Size = new System.Drawing.Size(123, 23);
+            this.theCodaToTLcodesButton.TabIndex = 67;
+            this.theCodaToTLcodesButton.Text = "iCoda <- TLcodes!";
+            this.theCodaToTLcodesButton.UseVisualStyleBackColor = true;
+            this.theCodaToTLcodesButton.Click += new System.EventHandler(this.theCodaToTLcodesButton_Click);
+            // 
+            // theParseTlCodesButton
+            // 
+            this.theParseTlCodesButton.Location = new System.Drawing.Point(569, 340);
+            this.theParseTlCodesButton.Name = "theParseTlCodesButton";
+            this.theParseTlCodesButton.Size = new System.Drawing.Size(123, 23);
+            this.theParseTlCodesButton.TabIndex = 68;
+            this.theParseTlCodesButton.Text = "Parse TLcodes File";
+            this.theParseTlCodesButton.UseVisualStyleBackColor = true;
+            this.theParseTlCodesButton.Click += new System.EventHandler(this.theParseTlCodesButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(704, 470);
+            this.ClientSize = new System.Drawing.Size(704, 609);
+            this.Controls.Add(this.theParseTlCodesButton);
+            this.Controls.Add(this.theCodaToTLcodesButton);
             this.Controls.Add(this.label26);
             this.Controls.Add(this.numericUpDown19);
             this.Controls.Add(this.label27);
@@ -1037,6 +1062,8 @@
         private System.Windows.Forms.NumericUpDown numericUpDown23;
         private System.Windows.Forms.Label label31;
         private System.Windows.Forms.NumericUpDown numericUpDown24;
+        private System.Windows.Forms.Button theCodaToTLcodesButton;
+        private System.Windows.Forms.Button theParseTlCodesButton;
     }
 }
 
