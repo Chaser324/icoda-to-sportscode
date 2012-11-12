@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace CodesConversion
 {
-    public class Code
+    public class Code : IEnumerable<Instance>
     {
         #region Private Fields
 
@@ -82,6 +82,32 @@ namespace CodesConversion
         {
             get { return theBlueValue; }
             set { theBlueValue = value; }
+        }
+
+        public Instance this[int index]
+        {
+            get
+            {
+                return theInstances[index];
+            }
+        }
+
+        public IEnumerator<Instance> GetEnumerator()
+        {
+            return theInstances.GetEnumerator();
+        }
+
+        public int InstanceCount
+        {
+            get
+            {
+                return theInstances.Count;
+            }
+        }
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
 
         #endregion

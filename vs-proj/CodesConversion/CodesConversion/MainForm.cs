@@ -45,7 +45,7 @@ namespace CodesConversion
                 InitCodaFile();
 
                 theSportsCodeFile = new SportsCodeFile(theTLcodesFilePath);
-                theSportsCodeFile.ConvertCodeFile(theCodaFile);
+                theSportsCodeFile.ConvertFile(theCodaFile);
             }
             else
             {

@@ -7,12 +7,10 @@ using System.Xml.Linq;
 
 namespace CodesConversion
 {
-    public class CodaFile
+    public class CodaFile : BaseFile
     {
         #region Private Fields
 
-        private String theFilePath = String.Empty;
-        private Dictionary<String,Code> theCodes = new Dictionary<string,Code>();
         
         #endregion
 
@@ -27,7 +25,7 @@ namespace CodesConversion
 
         #region Public Methods
 
-        public bool ParseFile()
+        public override bool ParseFile()
         {
             bool retVal = false;
 
@@ -90,15 +88,9 @@ namespace CodesConversion
             return retVal;
         }
 
-        public TreeNode BuildTree()
+        public override bool ConvertFile(IBaseFile file)
         {
-            TreeNode node = new TreeNode("Codes");
-            foreach (KeyValuePair<string,Code> entry in theCodes)
-            {
-                node.Nodes.Add(entry.Value.BuildTree());
-            }
-
-            return node;
+            return false;
         }
 
         #endregion

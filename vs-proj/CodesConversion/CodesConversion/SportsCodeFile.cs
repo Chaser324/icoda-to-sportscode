@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace CodesConversion
 {
-    public class SportsCodeFile
+    public class SportsCodeFile : BaseFile
     {
         #region Private Constants
 
@@ -54,8 +54,6 @@ namespace CodesConversion
 
         #region Private Fields
 
-        private String theFilePath = String.Empty;
-        private Dictionary<String, Code> theCodes = new Dictionary<string, Code>();
 
         #endregion
 
@@ -70,7 +68,7 @@ namespace CodesConversion
 
         #region Public Methods
 
-        public bool ParseFile()
+        public override bool ParseFile()
         {
             bool retVal = false;
 
@@ -138,18 +136,7 @@ namespace CodesConversion
             return retVal;
         }
 
-        public TreeNode BuildTree()
-        {
-            TreeNode node = new TreeNode("Codes");
-            foreach (KeyValuePair<string, Code> entry in theCodes)
-            {
-                node.Nodes.Add(entry.Value.BuildTree());
-            }
-
-            return node;
-        }
-
-        public bool ConvertCodeFile(CodaFile file)
+        public override bool ConvertFile(IBaseFile file)
         {
             bool retVal = false;
 

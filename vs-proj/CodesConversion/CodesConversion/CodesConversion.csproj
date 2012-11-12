@@ -52,8 +52,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseFile.cs" />
     <Compile Include="CodaFile.cs" />
     <Compile Include="Code.cs" />
+    <Compile Include="IBaseFile.cs" />
     <Compile Include="Instance.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
