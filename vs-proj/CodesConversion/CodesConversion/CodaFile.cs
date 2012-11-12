@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Windows.Forms;
 using System.Xml.Linq;
 
 namespace CodesConversion
@@ -90,7 +89,49 @@ namespace CodesConversion
 
         public override bool ConvertFile(IBaseFile file)
         {
-            return false;
+            bool retVal = false;
+
+            try
+            {
+                XDocument outputDoc = new XDocument(
+                    new XElement("file",
+                        new XElement("ALL_INSTANCES"),
+                        new XElement("ROWS")));
+
+                XElement outputInstances = outputDoc.Element("file").Element("ALL_INSTANCES");
+                XElement outputRows = outputDoc.Element("file").Element("ROWS");
+
+                uint ID = 1;
+
+                foreach (Code code in file)
+                {
+                    outputRows.Add(new XElement("row",
+                        new XElement("code", code.Name),
+                        new XElement("R", code.R),
+                        new XElement("G", code.G),
+                        new XElement("B", code.B)));
+
+                    foreach (Instance instance in code)
+                    {
+                        outputInstances.Add(new XElement("instance",
+                            new XElement("ID", ID.ToString()),
+                            new XElement("start", instance.Start.ToString("0.00")),
+                            new XElement("end", instance.End.ToString("0.00")),
+                            new XElement("code", instance.Code)));
+
+                        ++ID;
+                    }
+                }
+
+                outputDoc.Save(theFilePath);
+
+                retVal = true;
+            }
+            catch
+            {
+            }
+
+            return retVal;
         }
 
         #endregion

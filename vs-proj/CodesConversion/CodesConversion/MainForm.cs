@@ -55,7 +55,17 @@ namespace CodesConversion
 
         private void theCodaToTLcodesButton_Click(object sender, EventArgs e)
         {
+            if (File.Exists(theTLcodesFilePath) && theCodaFilePath != String.Empty)
+            {
+                InitTLcodesFile();
 
+                theCodaFile = new CodaFile(theCodaFilePath);
+                theCodaFile.ConvertFile(theSportsCodeFile);
+            }
+            else
+            {
+                // Error. Not all files specified.
+            }
         }
 
         private void theParseCodaFileButton_Click(object sender, EventArgs e)
