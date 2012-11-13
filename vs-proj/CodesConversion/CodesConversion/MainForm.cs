@@ -18,7 +18,6 @@ namespace CodesConversion
 
         private String theCodaFilePath = String.Empty;
         private String theTLcodesFilePath = String.Empty;
-        private String theVideoFilePath = String.Empty;
 
         private CodaFile theCodaFile = null;
         private SportsCodeFile theSportsCodeFile = null;
@@ -40,7 +39,7 @@ namespace CodesConversion
 
         private void theConvertButton_Click(object sender, EventArgs e)
         {
-            if (File.Exists(theCodaFilePath) && File.Exists(theVideoFilePath) && theTLcodesFilePath != String.Empty)
+            if (File.Exists(theCodaFilePath) && theTLcodesFilePath != String.Empty)
             {
                 InitCodaFile();
 
@@ -97,18 +96,6 @@ namespace CodesConversion
             {
                 theCodaFilePath = inputFileDiag.FileName;
                 theInputFileTextBox.Text = theCodaFilePath;
-            }
-        }
-
-        private void theVideoFileBrowseButton_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog inputFileDiag = new OpenFileDialog();
-            inputFileDiag.Filter = VIDEO_FILE_FILTER;
-
-            if (inputFileDiag.ShowDialog() == DialogResult.OK)
-            {
-                theVideoFilePath = inputFileDiag.FileName;
-                theVideoFileTextBox.Text = theVideoFilePath;
             }
         }
 

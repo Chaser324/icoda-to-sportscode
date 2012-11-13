@@ -10,18 +10,18 @@ namespace CodesConversion
         #region Private Constants
 
         // {0} = File ID
-        private const String HEADER_1 = "GameBreaker 10\n<version 5.4><ID>\t{0}\n" +
+        private const String HEADER_1 = "GameBreaker 10\n<version5.4>\n<ID>\t{0:0}\n" +
                                         "<Movie PKG ID>\tPKG_ID 000000000000 unimplemented\t</Movie PKG ID>\n" +
                                         "<long name Movie>\t</long name Movie>\n\n";
 
         // {0},{1},{2} = File Paths
-        private const String HEADER_2 = "<timeline full parent path>\n1\t" + "\xfffe" +
+        private const String HEADER_2 = "<timeline full parent path>\n1\t" + "\xff\xfe" +
                                         "file://{0}" + "\x03" + "\n" +
                                         "</timeline full parent path>\n\n" +
-                                        "<timeline full file path>\n1\t" + "\xfffe" +
+                                        "<timeline full file path>\n1\t" + "\xff\xfe" +
                                         "file://{1}" + "\x03" + "\n" +
                                         "</timeline full file path>\n\n" +
-                                        "<linked movie full file path>\n1\t" + "\xfffe" +
+                                        "<linked movie full file path>\n1\t" + "\xff\xfe" +
                                         "file://{2}" + "\x03" + "\n" +
                                         "</linked movie full file path>\n\n";
 
@@ -41,10 +41,36 @@ namespace CodesConversion
         // {0} = Video Filename
         // {1} = Last Instance Timestamp?
         // {2} = Length of Video
-        private const String HEADER_5 = "{0}\t-102\t34016\t0.00000000\t{1}\t{2}\t3435077624	";
+        private const String HEADER_5 = "{0}\t-102\t34016\t0.00000000\t{1}\t{2}\t3435077624\t\n\n";
 
         // {0} = String of Instance Start/End Headers "start:#\tend:#\t"
         private const String TABLE_HEADER = "Category: \trow colour:\t# instances\t{0}\n";
+
+        private const String TABLE_HEADER_2 = "Category:\tInstances:\tNum labels\txLabel data format - label type, then data eg string type, then string, for vectors - include 3 values\n";
+
+        private const String TABLE_HEADER_3 = "\n0\n\n0\n\n0\t0\t0\t0\n\n" + "CODE_MATRIX_ORGANISER_RECT\t800\t86\t1270\t400\n" + "NEW COLOURS\n";
+
+        private const String TABLE_HEADER_4 = "TXT:	0\nCHAP:\n0\n1586\n0\n\nUNIQUE IDs\n";
+
+        private const String TABLE_FOOTER_4 = "STRIP MARKERS:\t0\t-100000.0000000000\t100000.0000000000\t-10000.0000000000\t100000.0000000000\n\n" +
+                                              "<start DRAWING - instance info>\n" +
+                                              "<Nu instances:>\t0\n" +
+                                              "<end DRAWING>\n\n";
+
+        private const String TABLE_FOOTER_5 = "<free text CFStrings>\n<count>\t0\n</free text CFStrings>\n\n" +
+                                              "<free text Multibyte CFStrings>\n<count>\t0\n</free text Multibyte CFStrings>\nPopup menu:\t1\n<Static text control>\t0\n\n" +
+                                              "<instance label variation data>\n</instance label variation data>\n\n" +
+                                              "<mutable array labels>\n</mutable array labels>\n\n" +
+                                              "<labels list data>\n<no popup window>\n</labels list data>\n\n";
+
+        private const String TABLE_FOOTER_6 = "<Overlay text control>\t0\n\n" +
+                                              "<TIMELINE_MOVIETIME_DISPLAY_OPTIONS>\n" +
+                                              "0.0000000000\t0\t0\n\n";
+
+        private const String TABLE_FOOTER_7 = "<note_lines>\n" +
+                                              "3\n\n" +
+                                              "<END TIMELINE>\n";
+
 
         /* "0xca0xca" - start of player names , ETX = 0x03 */
 
@@ -138,7 +164,136 @@ namespace CodesConversion
         {
             bool retVal = false;
 
-            
+            try
+            {
+                using (StreamWriter sw = new StreamWriter(theFilePath))
+                {
+                    Random random = new Random();
+
+                    double randID = random.NextDouble();
+                    while (randID < 10000000000000000000)
+                    {
+                        randID *= 10;
+                    }
+
+                    sw.Write(String.Format(HEADER_1, randID));
+
+                    sw.Write(String.Format(HEADER_2, "1","2","3"));
+
+                    sw.Write(HEADER_3);
+
+                    int totalInstances = 0;
+                    foreach (Code code in file)
+                    {
+                        totalInstances += code.InstanceCount;
+                    }
+
+
+                    sw.Write(HEADER_4, file.CodeCount.ToString(), Path.GetFileName(theFilePath), totalInstances.ToString(), "");
+                    
+                    sw.Write(HEADER_5, "", "", "");
+
+                    StringBuilder temp = new StringBuilder();
+                    for (int i = 0; i < file.CodeCount; i++)
+                    {
+                        temp.Append("start:" + (i + 1).ToString() + "\tend:" + (i + 1).ToString() + "\t");
+                    }
+
+                    sw.Write(TABLE_HEADER, temp.ToString());
+
+                    foreach (Code code in file)
+                    {
+                        sw.Write(code.Name + "\t19\t" + code.InstanceCount + "\t");
+
+                        foreach (Instance instance in code)
+                        {
+                            sw.Write(instance.Start.ToString("0.0000000000") + "\t" + instance.End.ToString("0.0000000000") + "\t");
+                        }
+
+                        sw.Write("\n");
+                    }
+
+                    sw.Write("\n" + TABLE_HEADER_2);
+
+                    foreach (Code code in file)
+                    {
+                        sw.Write(code.Name + "\t\xca\xca" + code.InstanceCount + "\t\n");
+
+                        for (int i = 0; i < code.InstanceCount; i++)
+                        {
+                            sw.Write("\t" + (i+1).ToString() + "\t0\t\n");
+                        }
+                    }
+
+                    sw.Write(TABLE_HEADER_3);
+
+                    foreach (Code code in file)
+                    {
+                        sw.Write(code.R + "\t" + code.G + "\t" + code.B + "\n");
+                    }
+
+                    sw.Write(TABLE_HEADER_4);
+
+                    foreach (Code code in file)
+                    {
+                        for (int i = 0; i < code.InstanceCount; i++)
+                        {
+                            sw.Write("x\t");
+                        }
+
+                        sw.Write("\n");
+                    }
+
+                    sw.Write(TABLE_FOOTER_4);
+
+                    sw.Write("TL ID:\n" + String.Format("{0:0}",randID) + "\n\n");
+
+                    sw.Write(TABLE_FOOTER_5);
+
+                    sw.Write("<row names CF>\n");
+
+                    int j = 1;
+                    foreach (Code code in file)
+                    {
+                        sw.Write(j.ToString() + "\t\xff\xfe");
+                        ++j;
+
+                        foreach (char c in code.Name)
+                        {
+                            sw.Write(c);
+                            sw.Write("\x00");
+                        }
+
+                        sw.Write("\x03\n");
+                    }
+
+                    sw.Write("</row names CF>\n\n");
+
+                    sw.Write(TABLE_FOOTER_6);
+
+                    sw.Write("<UNIQUE ROW IDs>\n");
+
+                    foreach (Code code in file)
+                    {
+                        double rowID = random.NextDouble();
+                        while (rowID < 10000000000000000000)
+                        {
+                            rowID *= 10;
+                        }
+
+                        sw.Write(String.Format("{0:0}\n", rowID));
+                    }
+
+                    sw.Write("\n\n");
+
+                    sw.Write(TABLE_FOOTER_7);
+                }
+
+                retVal = true;
+            }
+            catch
+            {
+            }
 
             return retVal;
         }
