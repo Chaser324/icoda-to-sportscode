@@ -10,66 +10,65 @@ namespace CodesConversion
         #region Private Constants
 
         // {0} = File ID
-        private const String HEADER_1 = "GameBreaker 10\n<version5.4>\n<ID>\t{0:0}\n" +
-                                        "<Movie PKG ID>\tPKG_ID 000000000000 unimplemented\t</Movie PKG ID>\n" +
-                                        "<long name Movie>\t</long name Movie>\n\n";
+        private const String HEADER_1 = "GameBreaker\t10\r<version5.4>\r<ID>\t{0:0}\r" +
+                                        "<Movie PKG ID>\tPKG_ID 000000000000 unimplemented\t</Movie PKG ID>\r" +
+                                        "<long name Movie>\t</long name Movie>\r\r";
 
         // {0},{1},{2} = File Paths
-        private const String HEADER_2 = "<timeline full parent path>\n1\t" + "\xff\xfe" +
-                                        "file://{0}" + "\x03" + "\n" +
-                                        "</timeline full parent path>\n\n" +
-                                        "<timeline full file path>\n1\t" + "\xff\xfe" +
-                                        "file://{1}" + "\x03" + "\n" +
-                                        "</timeline full file path>\n\n" +
-                                        "<linked movie full file path>\n1\t" + "\xff\xfe" +
-                                        "file://{2}" + "\x03" + "\n" +
-                                        "</linked movie full file path>\n\n";
+        private const String HEADER_2A = "<timeline full parent path>\r1\t" + "\x3f\x3f";
+                                        //"file://{0}" + "\x03" + "\r" +
+        private const String HEADER_2B = "</timeline full parent path>\r\r";
 
-        private const String HEADER_3 = "+\t+\t+\t+\t+\t+\t+\t+\t+\t+\t+\t+\t+\t+\t+\t+\t+\t+\t+\t+\t+\t+\t+\t+\t+\t+\t+\t+\t+\t+\t+\n" +
-                                        "</version5.4>\n";
+        private const String HEADER_2C = "<timeline full file path>\r1\t" + "\x3f\x3f";
+                                        //"file://{0}" + "\x03" + "\r" +
+        private const String HEADER_2D = "</timeline full file path>\r\r";
+
+        private const String HEADER_2E = "<linked movie full file path>\r";
+                                        //"file://{0}" + "\x03" + "\r" +
+        private const String HEADER_2F = "</linked movie full file path>\r\r";
+
+        private const String HEADER_3 = "+\t+\t+\t+\t+\t+\t+\t+\t+\t+\t+\t+\t+\t+\t+\t+\t+\t+\t+\t+\t+\t+\t+\t+\t+\t+\t+\t+\t+\t+\t+\r" +
+                                        "</version5.4>\r";
 
         // {0} = Number of Codes
         // {1} = TLCodes Filename
         // {2} = Total Number of Instances
-        // {3} = Title
-        private const String HEADER_4 = "{0}\n{1}\n" +
-                                        "5\t484\t1278\t{2}\n" +
-                                        "140\t-174\t186\t0\n" +
-                                        "1\t{3}\t2\t85\n" +
-                                        "645\t445\n";
+        private const String HEADER_4 = "{0}\r{1}\r" +
+                                        "5\t484\t1278\t{2}\r" +
+                                        "140\t-174\t186\t0\r";
 
         // {0} = Video Filename
         // {1} = Last Instance Timestamp?
         // {2} = Length of Video
-        private const String HEADER_5 = "{0}\t-102\t34016\t0.00000000\t{1}\t{2}\t3435077624\t\n\n";
+        private const String HEADER_5 = "0\tno movie attached\t\r\r";
 
         // {0} = String of Instance Start/End Headers "start:#\tend:#\t"
-        private const String TABLE_HEADER = "Category: \trow colour:\t# instances\t{0}\n";
+        private const String TABLE_HEADER = "Category: \trow colour:\t# instances\t{0}\r";
 
-        private const String TABLE_HEADER_2 = "Category:\tInstances:\tNum labels\txLabel data format - label type, then data eg string type, then string, for vectors - include 3 values\n";
+        private const String TABLE_HEADER_2 = "Category:\tInstances:\tNum labels\txLabel data format - label type, then data eg string type, then string, for vectors - include 3 values\r";
 
-        private const String TABLE_HEADER_3 = "\n0\n\n0\n\n0\t0\t0\t0\n\n" + "CODE_MATRIX_ORGANISER_RECT\t800\t86\t1270\t400\n" + "NEW COLOURS\n";
+        private const String TABLE_HEADER_3 = "\r0\r\r0\r\r0\t0\t0\t0\r\r" + "CODE_MATRIX_ORGANISER_RECT\t800\t86\t1270\t400\r" + "NEW COLOURS\r";
 
-        private const String TABLE_HEADER_4 = "TXT:	0\nCHAP:\n0\n1586\n0\n\nUNIQUE IDs\n";
+        private const String TABLE_HEADER_4 = "TXT:	0\rCHAP:\r0\r1586\r0\r\rUNIQUE IDs\r";
 
-        private const String TABLE_FOOTER_4 = "STRIP MARKERS:\t0\t-100000.0000000000\t100000.0000000000\t-10000.0000000000\t100000.0000000000\n\n" +
-                                              "<start DRAWING - instance info>\n" +
-                                              "<Nu instances:>\t0\n" +
-                                              "<end DRAWING>\n\n";
+        private const String TABLE_FOOTER_4 = "STRIP MARKERS:\t0\t-100000.0000000000\t100000.0000000000\t-10000.0000000000\t100000.0000000000\r\r" +
+                                              "<start DRAWING - instance info>\r" +
+                                              "<Nu instances:>\t0\r" +
+                                              "<end DRAWING>\r\r";
 
-        private const String TABLE_FOOTER_5 = "<free text CFStrings>\n<count>\t0\n</free text CFStrings>\n\n" +
-                                              "<free text Multibyte CFStrings>\n<count>\t0\n</free text Multibyte CFStrings>\nPopup menu:\t1\n<Static text control>\t0\n\n" +
-                                              "<instance label variation data>\n</instance label variation data>\n\n" +
-                                              "<mutable array labels>\n</mutable array labels>\n\n" +
-                                              "<labels list data>\n<no popup window>\n</labels list data>\n\n";
+        private const String TABLE_FOOTER_5 = "<free text CFStrings>\r<count>\t0\r</free text CFStrings>\r\r" +
+                                              "<free text Multibyte CFStrings>\r<count>\t0\r</free text Multibyte CFStrings>\rPopup menu:\t1\r<Static text control>\t0\r\r" +
+                                              "<instance label variation data>\r</instance label variation data>\r\r" +
+                                              "<mutable array labels>\r</mutable array labels>\r\r" +
+                                              "<labels list data>\r<no popup window>\r</labels list data>\r\r";
 
-        private const String TABLE_FOOTER_6 = "<Overlay text control>\t0\n\n" +
-                                              "<TIMELINE_MOVIETIME_DISPLAY_OPTIONS>\n" +
-                                              "0.0000000000\t0\t0\n\n";
+        private const String TABLE_FOOTER_6 = "<Overlay text control>\t0\r\r" +
+                                              "<TIMELINE_MOVIETIME_DISPLAY_OPTIONS>\r" +
+                                              "0.0000000000\t0\t0\r\r";
 
-        private const String TABLE_FOOTER_7 = "<note_lines>\n" +
-                                              "3\n\n" +
-                                              "<END TIMELINE>\n";
+        private const String TABLE_FOOTER_7 = "<note_lines>\r" +
+                                              "3\r\r" +
+                                              "<END TIMELINE>\r";
 
 
         /* "0xca0xca" - start of player names , ETX = 0x03 */
@@ -178,7 +177,27 @@ namespace CodesConversion
 
                     sw.Write(String.Format(HEADER_1, randID));
 
-                    sw.Write(String.Format(HEADER_2, "1","2","3"));
+                    String filename1 = "file://localhost/Users/chasepettit/Desktop";
+                    String filename2 = "file://localhost/Users/chasepettit/test-updates.TLcodes";
+
+                    sw.Write(HEADER_2A);
+                    foreach (char c in filename1)
+                    {
+                        sw.Write(c);
+                        sw.Write("\x00");
+                    }
+                    sw.Write("\x03" + "\r" + HEADER_2B);
+
+                    sw.Write(HEADER_2C);
+                    foreach (char c in filename2)
+                    {
+                        sw.Write(c);
+                        sw.Write("\x00");
+                    }
+                    sw.Write("\x03" + "\r" + HEADER_2D);
+
+                    sw.Write(HEADER_2E + "0\t\r" + HEADER_2F);
+                    
 
                     sw.Write(HEADER_3);
 
@@ -187,14 +206,13 @@ namespace CodesConversion
                     {
                         totalInstances += code.InstanceCount;
                     }
-
-
+                    
                     sw.Write(HEADER_4, file.CodeCount.ToString(), Path.GetFileName(theFilePath), totalInstances.ToString(), "");
                     
-                    sw.Write(HEADER_5, "", "", "");
+                    sw.Write(HEADER_5);
 
                     StringBuilder temp = new StringBuilder();
-                    for (int i = 0; i < file.CodeCount; i++)
+                    for (int i = 0; i < file.MaxInstances; i++)
                     {
                         temp.Append("start:" + (i + 1).ToString() + "\tend:" + (i + 1).ToString() + "\t");
                     }
@@ -210,18 +228,18 @@ namespace CodesConversion
                             sw.Write(instance.Start.ToString("0.0000000000") + "\t" + instance.End.ToString("0.0000000000") + "\t");
                         }
 
-                        sw.Write("\n");
+                        sw.Write("\r");
                     }
 
-                    sw.Write("\n" + TABLE_HEADER_2);
+                    sw.Write("\r" + TABLE_HEADER_2);
 
                     foreach (Code code in file)
                     {
-                        sw.Write(code.Name + "\t\xca\xca" + code.InstanceCount + "\t\n");
+                        sw.Write(code.Name + "\t\x3f\x3f" + code.InstanceCount + "\t\r");
 
                         for (int i = 0; i < code.InstanceCount; i++)
                         {
-                            sw.Write("\t" + (i+1).ToString() + "\t0\t\n");
+                            sw.Write("\t" + (i+1).ToString() + "\t0\t\r");
                         }
                     }
 
@@ -229,7 +247,7 @@ namespace CodesConversion
 
                     foreach (Code code in file)
                     {
-                        sw.Write(code.R + "\t" + code.G + "\t" + code.B + "\n");
+                        sw.Write(code.R + "\t" + code.G + "\t" + code.B + "\r");
                     }
 
                     sw.Write(TABLE_HEADER_4);
@@ -241,21 +259,21 @@ namespace CodesConversion
                             sw.Write("x\t");
                         }
 
-                        sw.Write("\n");
+                        sw.Write("\r");
                     }
 
                     sw.Write(TABLE_FOOTER_4);
 
-                    sw.Write("TL ID:\n" + String.Format("{0:0}",randID) + "\n\n");
+                    sw.Write("TL ID:\r" + String.Format("{0:0}",randID) + "\r\r");
 
                     sw.Write(TABLE_FOOTER_5);
 
-                    sw.Write("<row names CF>\n");
+                    sw.Write("<row names CF>\r");
 
                     int j = 1;
                     foreach (Code code in file)
                     {
-                        sw.Write(j.ToString() + "\t\xff\xfe");
+                        sw.Write(j.ToString() + "\t\x3f\x3f");
                         ++j;
 
                         foreach (char c in code.Name)
@@ -264,14 +282,14 @@ namespace CodesConversion
                             sw.Write("\x00");
                         }
 
-                        sw.Write("\x03\n");
+                        sw.Write("\x03\r");
                     }
 
-                    sw.Write("</row names CF>\n\n");
+                    sw.Write("</row names CF>\r\r");
 
                     sw.Write(TABLE_FOOTER_6);
 
-                    sw.Write("<UNIQUE ROW IDs>\n");
+                    sw.Write("<UNIQUE ROW IDs>\r");
 
                     foreach (Code code in file)
                     {
@@ -281,10 +299,10 @@ namespace CodesConversion
                             rowID *= 10;
                         }
 
-                        sw.Write(String.Format("{0:0}\n", rowID));
+                        sw.Write(String.Format("{0:0}\r", rowID));
                     }
 
-                    sw.Write("\n\n");
+                    sw.Write("\r\r");
 
                     sw.Write(TABLE_FOOTER_7);
                 }

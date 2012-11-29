@@ -60,6 +60,25 @@ namespace CodesConversion
             return GetEnumerator();
         }
 
+        public int MaxInstances
+        {
+            get 
+            { 
+                int max = 0;
+
+                foreach (Code code in theCodes.Values)
+                {
+                    if (code.InstanceCount > max)
+                    {
+                        max = code.InstanceCount;
+                    }
+                }
+
+                return max;
+            }
+        }
+
         #endregion
+
     }
 }

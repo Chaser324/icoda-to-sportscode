@@ -21,5 +21,10 @@ namespace CodesConversion
         {
             get;
         }
+
+        int MaxInstances
+        {
+            get;
+        }
     }
 }

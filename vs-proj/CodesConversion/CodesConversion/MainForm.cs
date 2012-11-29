@@ -110,7 +110,7 @@ namespace CodesConversion
 
             if (theCodaFilePath != String.Empty && theTLcodesFilePath == String.Empty)
             {
-                saveFileDiag.FileName = theCodaFilePath.Replace(".xml",".TLCodes");
+                saveFileDiag.FileName = theCodaFilePath.Replace(".xml",".TLcodes");
             }
 
             if (saveFileDiag.ShowDialog() == DialogResult.OK)
